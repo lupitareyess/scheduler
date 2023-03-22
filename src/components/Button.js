@@ -1,17 +1,12 @@
 import React from "react";
+import classNames from "classnames";
 
 import "components/Button.scss";
 
 export default function Button(props) {
-  let buttonClass = "button";
-  // if confirm is passed as prop, then add CSS class styles to the confirm buttons
+  const { confirm, danger } = props;
 
-  if (props.confirm) {
-    buttonClass += " button--confirm"
-  }
-  if (props.danger) {
-    buttonClass += " button--danger"
-  }
+  const buttonClass = classNames("button", { "button--confirm": confirm, "button--danger": danger });
 
 
   return (
