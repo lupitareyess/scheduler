@@ -9,24 +9,14 @@ export default function InterviewerListItem(props) {
   const interviewerClass = classNames('interviewers__item',
     { 'interviewers__item--selected': selected })
 
-  function onClick() {
-    setInterviewer(id)
-  }
-
-  function ifSelected(id) {
-    if (selected) {
-      return `${name}`
-    }
-  }
-
   return (
-    <li className={interviewerClass} onClick={onClick}>
+    <li className={interviewerClass} onClick={setInterviewer}>
       <img
         className="interviewers__item-image"
         src={avatar}
         alt={name}
       />
-      {ifSelected(selected)}
+      {selected && name}
     </li>
   )
 }
