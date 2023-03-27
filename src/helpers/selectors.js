@@ -13,3 +13,19 @@ export function getAppointmentsForDay(state, day) {
 
   return appointments;
 };
+
+export function getInterview(state, interview) {
+  if (!interview) {
+    return null
+  }
+
+  const filteredInterview = {
+    interviewer: state.interviewers[interview.interviewer],
+    student: interview.student
+  }
+
+  console.log("interview", filteredInterview)
+
+  return filteredInterview;
+
+}
