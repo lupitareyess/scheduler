@@ -28,13 +28,13 @@ export default function Application(props) {
       interview={interview}
       interviewers={interviewers}
       bookInterview={bookInterview}
+      cancelInterview={cancelInterview}
     />
     )
   })
 
   const setDay = (day) => setState({ ...state, day });
 
-  // const setDays = (days) => setState(prev => ({ ...prev, days }));
 
   function bookInterview(id, interview) {
     const appointment = {
@@ -42,23 +42,42 @@ export default function Application(props) {
       interview: { ...interview }
     };
 
+    // these are the new appointments
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
 
-    return axios.put(`/api/appointments/${id}`, { interview })
+    return axios
+      .put(`/api/appointments/${id}`, { interview })
       .then(() => {
         setState({ ...state, appointments })
-        console.log(setState)
       })
       .catch(error => {
         console.log("error:", error.message)
       })
   }
 
-  console.log('state appt', state.appointments)
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
 
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return axios
+      .delete(`/api/appointments/${id}`, appointment)
+      .then(() => {
+        setState({ ...state, appointments })
+      })
+      .catch(error => {
+        console.log("error:", error.message)
+      })
+  }
 
   useEffect(() => {
     Promise.all([
@@ -72,6 +91,7 @@ export default function Application(props) {
       console.log('all2', all[2].data)
     })
   }, [])
+
 
   return (
     <main className="layout">
