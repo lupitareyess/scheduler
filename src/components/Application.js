@@ -27,6 +27,7 @@ export default function Application(props) {
       time={appointment.time}
       interview={interview}
       interviewers={interviewers}
+      bookInterview={bookInterview}
     />
     )
   })
@@ -34,6 +35,30 @@ export default function Application(props) {
   const setDay = (day) => setState({ ...state, day });
 
   // const setDays = (days) => setState(prev => ({ ...prev, days }));
+
+  function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return axios.put(`/api/appointments/${id}`, { interview })
+      .then(() => {
+        setState({ ...state, appointments })
+        console.log(setState)
+      })
+      .catch(error => {
+        console.log("error:", error.message)
+      })
+  }
+
+  console.log('state appt', state.appointments)
+
 
   useEffect(() => {
     Promise.all([
