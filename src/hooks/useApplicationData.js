@@ -31,17 +31,16 @@ export default function useApplicationData() {
       ...state.appointments[id],
       interview: { ...interview }
     };
-
-    // these are the new appointments
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
+    const days = updateSpots(state, appointments)
 
     return axios
       .put(`/api/appointments/${id}`, { interview })
       .then(() => {
-        setState({ ...state, appointments })
+        setState({ ...state, appointments, days })
       })
   }
 
@@ -55,13 +54,30 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
+    const days = updateSpots(state, appointments)
 
     return axios
       .delete(`/api/appointments/${id}`, appointment)
       .then(() => {
-        setState({ ...state, appointments })
+        setState({ ...state, appointments, days })
       })
   }
+
+  const updateSpots = function(state, appointments) {
+    const dayObj = state.days.find(d => d.name === state.day)
+
+    let spots = 0;
+    for (const id of dayObj.appointments) {
+      if (!appointments[id].interview) {
+        spots++;
+      }
+    }
+
+    const day = { ...dayObj, spots };
+    return state.days.map(d => d.name === state.day ? day : d)
+  };
+
+
   return { state, setDay, bookInterview, cancelInterview }
 }
 
