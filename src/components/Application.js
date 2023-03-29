@@ -53,9 +53,6 @@ export default function Application(props) {
       .then(() => {
         setState({ ...state, appointments })
       })
-      .catch(error => {
-        console.log("error:", error.message)
-      })
   }
 
   function cancelInterview(id) {
@@ -73,9 +70,6 @@ export default function Application(props) {
       .delete(`/api/appointments/${id}`, appointment)
       .then(() => {
         setState({ ...state, appointments })
-      })
-      .catch(error => {
-        console.log("error:", error.message)
       })
   }
 
