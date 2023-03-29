@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
+import useApplicationData from "hooks/useApplicationData";
 
 import "components/Application.scss";
 import DayList from "./DayList";
@@ -8,14 +8,10 @@ import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "help
 
 
 export default function Application(props) {
-  const [state, setState] = useState({
-    day: "Monday",
-    days: [],
-    appointments: {},
-    interviewers: {}
-  });
+  const { state, setDay, bookInterview, cancelInterview } = useApplicationData()
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
+
   const interviewers = getInterviewersForDay(state, state.day)
 
   const schedule = dailyAppointments.map((appointment) => {
@@ -32,60 +28,6 @@ export default function Application(props) {
     />
     )
   })
-
-  const setDay = (day) => setState({ ...state, day });
-
-
-  function bookInterview(id, interview) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-
-    // these are the new appointments
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    return axios
-      .put(`/api/appointments/${id}`, { interview })
-      .then(() => {
-        setState({ ...state, appointments })
-      })
-  }
-
-  function cancelInterview(id) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    return axios
-      .delete(`/api/appointments/${id}`, appointment)
-      .then(() => {
-        setState({ ...state, appointments })
-      })
-  }
-
-  useEffect(() => {
-    Promise.all([
-      axios.get('/api/days'),
-      axios.get('/api/appointments'),
-      axios.get('/api/interviewers')
-    ]).then((all) => {
-      setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
-      console.log('all days', all[0].data)
-      console.log('all appointments', all[1].data)
-      console.log('all2', all[2].data)
-    })
-  }, [])
-
 
   return (
     <main className="layout">
