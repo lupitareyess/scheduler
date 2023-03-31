@@ -11,7 +11,7 @@ describe("Application", () => {
   it("changes the schedule when a new day is selected", async () => {
     const { getByText } = render(<Application />);
 
-    await waitForElement(() => getByText("Monday"))
+    await waitForElement(() => getByText("Monday"));
 
     fireEvent.click(getByText("Tuesday"));
 
@@ -37,7 +37,7 @@ describe("Application", () => {
     fireEvent.click(getByText(appointment, "Save"));
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
-    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"))
+    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
 
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday"));
@@ -54,12 +54,12 @@ describe("Application", () => {
     );
 
     fireEvent.click(getByAltText(appointment, "Delete"));
-    expect(getByText(appointment, /are you sure you would like to delete/i))
+    expect(getByText(appointment, /are you sure you would like to delete/i));
 
     fireEvent.click(getByText(appointment, "Confirm"));
     expect(getByText(appointment, "Deleting")).toBeInTheDocument();
 
-    await waitForElement(() => getByAltText(appointment, "Add"))
+    await waitForElement(() => getByAltText(appointment, "Add"));
 
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday"));
@@ -133,7 +133,7 @@ describe("Application", () => {
     );
 
     fireEvent.click(getByAltText(appointment, "Delete"));
-    expect(getByText(appointment, /are you sure you would like to delete/i))
+    expect(getByText(appointment, /are you sure you would like to delete/i));
 
     fireEvent.click(getByText(appointment, "Confirm"));
     expect(getByText(appointment, "Deleting")).toBeInTheDocument();
@@ -143,8 +143,6 @@ describe("Application", () => {
 
     fireEvent.click(getByAltText(appointment, "Close"));
     expect(getByText(appointment, "Archie Cohen")).toBeInTheDocument();
+  });
 
-    console.log(prettyDOM(appointment))
-  })
-
-})
+});

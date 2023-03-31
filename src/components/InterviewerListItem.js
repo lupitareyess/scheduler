@@ -1,13 +1,13 @@
 import React from "react";
 
-import "components/InterviewerListItem.scss"
+import "components/InterviewerListItem.scss";
 
 export default function InterviewerListItem(props) {
   const { name, avatar, selected, setInterviewer } = props;
   const classNames = require('classnames');
 
   const interviewerClass = classNames('interviewers__item',
-    { 'interviewers__item--selected': selected })
+    { 'interviewers__item--selected': selected });
 
   return (
     <li className={interviewerClass} onClick={setInterviewer}>
@@ -18,6 +18,6 @@ export default function InterviewerListItem(props) {
       />
       {selected && name}
     </li>
-  )
-}
+  );
+};
 

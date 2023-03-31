@@ -8,14 +8,14 @@ import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "help
 
 
 export default function Application(props) {
-  const { state, setDay, bookInterview, cancelInterview } = useApplicationData()
+  const { state, setDay, bookInterview, cancelInterview } = useApplicationData();
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
-  const interviewers = getInterviewersForDay(state, state.day)
+  const interviewers = getInterviewersForDay(state, state.day);
 
   const schedule = dailyAppointments.map((appointment) => {
-    const interview = getInterview(state, appointment.interview)
+    const interview = getInterview(state, appointment.interview);
 
     return (<Appointment
       key={appointment.id}
@@ -27,7 +27,7 @@ export default function Application(props) {
       cancelInterview={cancelInterview}
     />
     )
-  })
+  });
 
   return (
     <main className="layout">
@@ -58,4 +58,4 @@ export default function Application(props) {
 
     </main>
   );
-}
+};

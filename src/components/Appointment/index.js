@@ -9,7 +9,7 @@ import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
 
 
-import "components/Appointment/styles.scss"
+import "components/Appointment/styles.scss";
 
 
 export default function Appointment(props) {
@@ -29,30 +29,28 @@ export default function Appointment(props) {
     const interview = {
       student: name,
       interviewer
-    }
+    };
+
     transition(SAVING);
     props.bookInterview(props.id, interview)
       .then(() => transition(SHOW))
       .catch(() => {
         transition(ERROR_SAVE, true)
-      })
-  }
+      });
+  };
 
   function destroy() {
     transition(DELETING, true);
     props.cancelInterview(props.id)
       .then(() => transition(EMPTY))
       .catch(() => {
-        console.log('catch hit')
         transition(ERROR_DELETE, true)
-      })
-  }
+      });
+  };
 
   function edit() {
-    transition(EDIT)
-  }
-  console.log('mode', mode)
-
+    transition(EDIT);
+  };
 
   return (
     <article className="appointment" data-testid="appointment">
@@ -111,9 +109,6 @@ export default function Appointment(props) {
           onClose={() => transition(SHOW)}
         />
       )}
-
-
-
     </article>
-  )
-}
+  );
+};
