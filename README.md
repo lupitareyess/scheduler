@@ -1,5 +1,9 @@
 # Interview Scheduler
 
+Welcome to **Scheduler**, an app created with React for students to easily book appointments with mentors.
+
+![Homepage](https://github.com/lupitareyess/scheduler/blob/master/docs/scheduler-home.png?raw=true)
+
 ## Setup
 
 Install dependencies with `npm install`.
